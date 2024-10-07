@@ -12,7 +12,7 @@ import ListaContratos from "./pages/ListaContratos/ListaContratos";
 
 const App: FC = () => {
   return (
-    <BrowserRouter basename="/contrato-interadministrativo/">
+    <BrowserRouter basename="/Lista-Contratos/">
       <AuthProvider>
         <Routes>
           {/* Ruta pública para el login */}
