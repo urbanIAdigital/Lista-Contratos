@@ -1,15 +1,14 @@
 // src/components/Sidebar.tsx
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { Collapse } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { useTranslation } from "react-i18next";
-import { Collapse } from "@mui/material";
-import { useState } from "react";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import data from '../constants/data_resp.json'
 
 interface SidebarProps {
   open: boolean;
@@ -56,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
             </ListItem>
             <Collapse in={openProjects} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                {data.contratos.map((item) => (
+                {/* {data.contratos.map((item) => (
                   <ListItem
                     button
                     component={Link}
@@ -66,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleSidebar }) => {
                   >
                     <ListItemText primary={item.menu_title} />
                   </ListItem>
-                ))}
+                ))} */}
               </List>
             </Collapse>
           </>

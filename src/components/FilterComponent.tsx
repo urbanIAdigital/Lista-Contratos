@@ -1,10 +1,12 @@
 import { Autocomplete, Box, Button, Grid, TextField } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 const FilterComponent = (props: {
-  onSubmit: Dispatch<
-    SetStateAction<{ comuna: string; tipologia: string; estado: string }>
-  >;
+  onSubmit: (filters: {
+    comuna: string;
+    tipologia: string;
+    estado: string;
+  }) => void;
 }) => {
   const { onSubmit } = props;
   const optionsTipologia = [
@@ -105,9 +107,7 @@ const FilterComponent = (props: {
               options={comunas}
               value={comuna}
               getOptionLabel={(option) => option.label}
-              onChange={(event, newValue) =>
-                setComuna(newValue || initialValues)
-              }
+              onChange={(_, newValue) => setComuna(newValue || initialValues)}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -155,7 +155,7 @@ const FilterComponent = (props: {
               options={optionsTipologia}
               value={tipologia}
               getOptionLabel={(option) => option.label}
-              onChange={(event, newValue) =>
+              onChange={(_, newValue) =>
                 setTipologia(newValue || initialValues)
               }
               renderInput={(params) => (
@@ -204,9 +204,7 @@ const FilterComponent = (props: {
               options={estados}
               value={estado}
               getOptionLabel={(option) => option.label}
-              onChange={(event, newValue) =>
-                setEstado(newValue || initialValues)
-              }
+              onChange={(_, newValue) => setEstado(newValue || initialValues)}
               renderInput={(params) => (
                 <TextField
                   {...params}

@@ -7,6 +7,7 @@ import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
 import FeYAlegria from "../assets/fe_y_alegria.png";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function CardComponent(props: { data: any }) {
   const { data } = props;
   const USDollar = new Intl.NumberFormat("en-US", {

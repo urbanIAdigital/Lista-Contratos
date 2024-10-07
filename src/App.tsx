@@ -1,19 +1,18 @@
-import { FC, ReactNode } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { FC } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./context/AuthContext";
-import { useAuth } from "./hooks/useAuth";
 import Home from "./pages/Home/Home";
 import ListaContratos from "./pages/ListaContratos/ListaContratos";
 
-const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
-};
+// const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
+//   const { isAuthenticated } = useAuth();
+//   return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+// };
 
 const App: FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/contrato-interadministrativo/">
       <AuthProvider>
         <Routes>
           {/* Ruta pública para el login */}

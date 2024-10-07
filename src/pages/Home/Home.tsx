@@ -1,8 +1,9 @@
 import { Box, Grid, Pagination, Typography } from "@mui/material";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import CardComponent from "../../components/CardComponent";
 import FilterComponent from "../../components/FilterComponent";
 import dataResp from "../../constants/data_resp.json";
+
 
 const Home = () => {
   const [dataFromJson, setDataFromJson] = useState(dataResp);
@@ -10,28 +11,23 @@ const Home = () => {
   const [itemsPerPage] = useState(8); // Cantidad de items por página
 
   // Función para cambiar la página
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
+  const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };
 
   // Filtrar datos según los inputs del filtro
-  const onSubmitFilter = (
-    data: SetStateAction<{
-      comuna: string;
-      tipologia: string;
-      estado: string;
-    }>
-  ) => {
+  const onSubmitFilter = (data: {
+    comuna: string;
+    tipologia: string;
+    estado: string;
+  }) => {
     console.log(data);
 
     if (data.comuna === "" && data.tipologia === "" && data.estado === "") {
       setDataFromJson(dataResp);
       return;
     }
-    const filteredData = [...dataResp].filter((item: any) => {
+    const filteredData = [...dataResp].filter((item) => {
       const filterByComuna = data.comuna ? item.comuna === +data.comuna : true;
       const filterByEstado = data.estado ? item.estado === data.estado : true;
       const filterByTipologia = data.tipologia
@@ -77,7 +73,7 @@ const Home = () => {
                 width={"100%"}
                 spacing={1}
               >
-                {currentItems.map((item: any, index: number) => (
+                {currentItems.map((item, index: number) => (
                   <Grid key={index} item xs={12} sm={4} md={3} mb={1}>
                     <CardComponent data={item} />
                   </Grid>
