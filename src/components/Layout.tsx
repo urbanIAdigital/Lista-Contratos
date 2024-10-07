@@ -1,40 +1,40 @@
-import { Box, CssBaseline } from "@mui/material";
+// src/components/Layout.tsx
 import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+const Layout: React.FC = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [open, setOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setOpen(!open);
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100%" }}>
-      <CssBaseline />
-      <Header onDrawerToggle={handleDrawerToggle} />
-      <Sidebar
-        open={open}
-        onOpen={() => setOpen(true)}
-        onClose={() => setOpen(false)}
-      />
-      <Box
-        component="main"
-        sx={{
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <Header toggleSidebar={toggleSidebar} />
+      <div
+        style={{
+          display: "flex",
           flexGrow: 1,
-          p: 3,
-          marginTop: "64px",
-          height: "calc(100vh-64px)",
+          transition: "margin-left 0.3s ease",
         }}
       >
-        {children}
-      </Box>
-    </Box>
+        <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} />
+        <main
+          style={{
+            flexGrow: 1,
+            marginLeft: sidebarOpen ? "0px" : "-240px",
+            transition: "margin-left 0.3s ease",
+            marginTop: "74px",
+            backgroundColor: "#FFF7F7",
+          }}
+        >
+          <Outlet />
+        </main>
+      </div>
+    </div>
   );
 };
 

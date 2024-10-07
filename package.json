@@ -13,6 +13,8 @@
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^5.16.6",
+    "@mui/x-data-grid": "^7.12.1",
+    "@mui/icons-material": "^5.16.7",
     "@tabler/icons-react": "^3.11.0",
     "i18next": "^23.12.2",
     "react": "^18.3.1",

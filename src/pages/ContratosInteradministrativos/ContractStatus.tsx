@@ -1,10 +1,12 @@
 import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const ContractStatus = () => {
+  const { t } = useTranslation();
   const data = [
     {
       title: "ESTADO",
-      definition: "Activo",
+      definition: t("active"),
     },
     {
       title: "MODALIDAD",

@@ -1,30 +1,113 @@
 import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { IconMenu2 } from "@tabler/icons-react";
-import { FC } from "react";
-
+import { IconMenu } from "@tabler/icons-react";
+import { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
+import eduLogo from "../assets/Logo_edu_1.png";
+import { useAuth } from "../hooks/useAuth";
 interface HeaderProps {
-  onDrawerToggle: () => void;
+  toggleSidebar: () => void;
 }
 
-const Header: FC<HeaderProps> = ({ onDrawerToggle }) => {
+const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
+  const { t } = useTranslation();
+  const { isAuthenticated, login, logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = () => {
+    if (login(username, password)) {
+      setOpen(false);
+      setError("");
+    } else {
+      setError("Credenciales incorrectas.");
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
-    <AppBar>
+    <AppBar
+      position="fixed"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, bgcolor: "#212131" }}
+    >
       <Toolbar>
+        <Box width={200}>
+          <img src={eduLogo} alt="" height={70} />
+        </Box>
         <IconButton
           edge="start"
           color="inherit"
           aria-label="menu"
-          onClick={onDrawerToggle}
+          onClick={toggleSidebar}
+          sx={{ display: "none" }}
         >
-          <IconMenu2 />
+          <IconMenu />
         </IconButton>
-        <Typography variant="h6" noWrap>
-          Contratos Interadministrativos
-        </Typography>
+        <Typography variant="h6" style={{ flexGrow: 1 }}></Typography>
+        {isAuthenticated ? (
+          <Button color="inherit" onClick={handleLogout}>
+            {t("logout")}
+          </Button>
+        ) : (
+          <Button
+            color="inherit"
+            onClick={() => setOpen(true)}
+            sx={{ display: "none" }}
+          >
+            {t("login")}
+          </Button>
+        )}
       </Toolbar>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <Box
+          component={"form"}
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 300,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+        >
+          <TextField
+            label="Usuario"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextField
+            label="Contraseña"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {error && <Typography color="error">{error}</Typography>}
+          <Button
+            variant="contained"
+            type="submit"
+            color="primary"
+            onClick={handleLogin}
+          >
+            Iniciar Sesión
+          </Button>
+        </Box>
+      </Modal>
     </AppBar>
   );
 };

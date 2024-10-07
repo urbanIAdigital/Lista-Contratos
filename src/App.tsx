@@ -1,28 +1,45 @@
-import React from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { FC, ReactNode } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import ContratosInteradministrativos from "./pages/ContratosInteradministrativos/ContratosInteradministrativos";
-import NotFoundPage from "./pages/NotFoundPage";
-import SeguimientoContratos from "./pages/SeguimientoContratos";
+import { AuthProvider } from "./context/AuthContext";
+import { useAuth } from "./hooks/useAuth";
+import Home from "./pages/Home/Home";
+import ListaContratos from "./pages/ListaContratos/ListaContratos";
 
-const App: React.FC = () => {
+const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+};
+
+const App: FC = () => {
   return (
-    <Router>
-      <Layout>
+    <BrowserRouter>
+      <AuthProvider>
         <Routes>
-          <Route path="/" element={<SeguimientoContratos />} />
-          <Route
-            path="/seguimiento-contratos"
-            element={<SeguimientoContratos />}
-          />
-          <Route
-            path="/contratos-interadministrativos"
-            element={<ContratosInteradministrativos />}
-          />
-          <Route path="/*" element={<NotFoundPage />} />
+          {/* Ruta pública para el login */}
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+          </Route>
+          <Route path="/list" element={<Layout />}>
+            <Route index element={<ListaContratos />} />
+          </Route>
+
+          {/* Rutas protegidas */}
+          {/* <Route
+            path="/login"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<>Home</>} />
+            <Route path="contrato/:contrato_id" element={<>contract</>} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route> */}
         </Routes>
-      </Layout>
-    </Router>
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 
