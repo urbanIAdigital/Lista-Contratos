@@ -1,4 +1,16 @@
-import { Autocomplete, Box, Button, Grid, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 
 const FilterComponent = (props: {
@@ -74,6 +86,7 @@ const FilterComponent = (props: {
       proyecto: proyecto,
     });
   };
+
   const handleClear = () => {
     setComuna(initialValues);
     setTipologia(initialValues);
@@ -81,11 +94,18 @@ const FilterComponent = (props: {
     setEstado(initialValues);
     onSubmit({ comuna: "", tipologia: "", estado: "", proyecto: "" });
   };
+
+  // Usamos useMediaQuery para detectar el tamaño de la pantalla
+  const isSmallScreen = useMediaQuery((theme: any) =>
+    theme.breakpoints.down("md")
+  );
+
   return (
     <Box
       component={"div"}
       sx={{
-        height: "200px",
+        height: "auto",
+        padding: "16px",
         background:
           "linear-gradient(45deg, rgba(61,99,185,1) 0%, rgba(9,29,74,1) 100%)",
         display: "flex",
@@ -93,25 +113,185 @@ const FilterComponent = (props: {
         justifyContent: "center",
       }}
     >
-      <Grid
-        container
-        display={"flex"}
-        flexDirection={"column"}
-        alignItems={"center"}
-        alignContent={"center"}
-      >
-        <Grid item>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-            }}
+      {/* Si es una pantalla pequeña, envolvemos los filtros en un Accordion */}
+      {isSmallScreen ? (
+        <Accordion sx={{bgcolor: "transparent"}}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
           >
+            <Typography sx={{ color: "#fff" }}>Filtros de búsqueda</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              {/* Campos del formulario */}
+              <Grid item xs={12}>
+                <TextField
+                  label="Buscar Proyecto"
+                  value={proyecto}
+                  onChange={(e) => setProyecto(e.target.value)}
+                  fullWidth
+                  InputLabelProps={{
+                    sx: {
+                      color: "#fff",
+                      "&.Mui-focused": { color: "#fff" },
+                      "&.MuiInputLabel-shrink": { color: "#fff" },
+                    },
+                  }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "#ccc",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "#888",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#000",
+                      },
+                    },
+                    "& .MuiInputBase-root": {
+                      color: "#fff",
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Autocomplete
+                  options={comunas}
+                  value={comuna}
+                  getOptionLabel={(option) => option.label}
+                  onChange={(_, newValue) =>
+                    setComuna(newValue || initialValues)
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Seleccionar Comuna"
+                      InputLabelProps={{
+                        sx: {
+                          color: "#fff",
+                          "&.Mui-focused": { color: "#fff" },
+                          "&.MuiInputLabel-shrink": { color: "#fff" },
+                        },
+                      }}
+                      fullWidth
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            borderColor: "#ccc",
+                          },
+                          "&:hover fieldset": {
+                            borderColor: "#888",
+                          },
+                          "&.Mui-focused fieldset": {
+                            borderColor: "#000",
+                          },
+                        },
+                        "& .MuiInputBase-root": {
+                          color: "#fff",
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Autocomplete
+                  options={optionsTipologia}
+                  value={tipologia}
+                  getOptionLabel={(option) => option.label}
+                  onChange={(_, newValue) =>
+                    setTipologia(newValue || initialValues)
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Seleccionar Tipología"
+                      InputLabelProps={{
+                        sx: {
+                          color: "#fff",
+                          "&.Mui-focused": { color: "#fff" },
+                          "&.MuiInputLabel-shrink": { color: "#fff" },
+                        },
+                      }}
+                      fullWidth
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            borderColor: "#ccc",
+                          },
+                          "&:hover fieldset": {
+                            borderColor: "#888",
+                          },
+                          "&.Mui-focused fieldset": {
+                            borderColor: "#000",
+                          },
+                        },
+                        "& .MuiInputBase-root": {
+                          color: "#fff",
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Autocomplete
+                  options={estados}
+                  value={estado}
+                  getOptionLabel={(option) => option.label}
+                  onChange={(_, newValue) =>
+                    setEstado(newValue || initialValues)
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Seleccionar Estado"
+                      InputLabelProps={{
+                        sx: {
+                          color: "#fff",
+                          "&.Mui-focused": { color: "#fff" },
+                          "&.MuiInputLabel-shrink": { color: "#fff" },
+                        },
+                      }}
+                      fullWidth
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            borderColor: "#ccc",
+                          },
+                          "&:hover fieldset": {
+                            borderColor: "#888",
+                          },
+                          "&.Mui-focused fieldset": {
+                            borderColor: "#000",
+                          },
+                        },
+                        "& .MuiInputBase-root": {
+                          color: "#fff",
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      ) : (
+        <Grid container spacing={2}>
+          {/* Campos del formulario cuando no hay accordion */}
+          <Grid item pr={2} xs={12} sm={6} md={3}>
             <TextField
               label="Buscar Proyecto"
               value={proyecto}
               onChange={(e) => setProyecto(e.target.value)}
+              fullWidth
               InputLabelProps={{
                 sx: {
                   color: "#fff",
@@ -136,7 +316,9 @@ const FilterComponent = (props: {
                 },
               }}
             />
+          </Grid>
 
+          <Grid item pr={2} xs={12} sm={6} md={3}>
             <Autocomplete
               options={comunas}
               value={comuna}
@@ -153,6 +335,7 @@ const FilterComponent = (props: {
                       "&.MuiInputLabel-shrink": { color: "#fff" },
                     },
                   }}
+                  fullWidth
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
@@ -171,20 +354,10 @@ const FilterComponent = (props: {
                   }}
                 />
               )}
-              sx={{ width: 250 }}
-              ListboxProps={{
-                sx: {
-                  "& .MuiAutocomplete-option": {
-                    color: "#000",
-                    '&[aria-selected="true"]': {
-                      backgroundColor: "#000",
-                      color: "#fff",
-                    },
-                  },
-                },
-              }}
             />
+          </Grid>
 
+          <Grid item pr={2} xs={12} sm={6} md={3}>
             <Autocomplete
               options={optionsTipologia}
               value={tipologia}
@@ -203,6 +376,7 @@ const FilterComponent = (props: {
                       "&.MuiInputLabel-shrink": { color: "#fff" },
                     },
                   }}
+                  fullWidth
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
@@ -221,19 +395,10 @@ const FilterComponent = (props: {
                   }}
                 />
               )}
-              sx={{ width: 250 }}
-              ListboxProps={{
-                sx: {
-                  "& .MuiAutocomplete-option": {
-                    color: "#000",
-                    '&[aria-selected="true"]': {
-                      backgroundColor: "#000",
-                      color: "#fff",
-                    },
-                  },
-                },
-              }}
             />
+          </Grid>
+
+          <Grid item pr={2} xs={12} sm={6} md={3}>
             <Autocomplete
               options={estados}
               value={estado}
@@ -250,6 +415,7 @@ const FilterComponent = (props: {
                       "&.MuiInputLabel-shrink": { color: "#fff" },
                     },
                   }}
+                  fullWidth
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
@@ -268,37 +434,21 @@ const FilterComponent = (props: {
                   }}
                 />
               )}
-              sx={{ width: 250 }}
-              ListboxProps={{
-                sx: {
-                  "& .MuiAutocomplete-option": {
-                    color: "#000",
-                    '&[aria-selected="true"]': {
-                      backgroundColor: "#000",
-                      color: "#fff",
-                    },
-                  },
-                },
-              }}
             />
+          </Grid>
+        </Grid>
+      )}
 
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit}
-              sx={{ height: "56px" }}
-            >
-              Ingresar
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleClear}
-              sx={{ height: "56px" }}
-            >
-              Limpiar Filtros
-            </Button>
-          </Box>
+      <Grid container spacing={2} mt={2} justifyContent="flex-end">
+        <Grid item>
+          <Button variant="contained" color="secondary" onClick={handleClear}>
+            Limpiar
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            Aplicar Filtros
+          </Button>
         </Grid>
       </Grid>
     </Box>
