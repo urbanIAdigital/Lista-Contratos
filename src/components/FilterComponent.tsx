@@ -6,6 +6,7 @@ const FilterComponent = (props: {
     comuna: string;
     tipologia: string;
     estado: string;
+    proyecto: string;
   }) => void;
 }) => {
   const { onSubmit } = props;
@@ -53,6 +54,8 @@ const FilterComponent = (props: {
     value: "",
   };
 
+  const [proyecto, setProyecto] = useState("");
+
   const [tipologia, setTipologia] = useState<{ label: string; value: string }>(
     initialValues
   );
@@ -68,13 +71,15 @@ const FilterComponent = (props: {
       comuna: comuna.value,
       tipologia: tipologia.value,
       estado: estado.value,
+      proyecto: proyecto,
     });
   };
   const handleClear = () => {
     setComuna(initialValues);
     setTipologia(initialValues);
+    setProyecto("");
     setEstado(initialValues);
-    onSubmit({ comuna: "", tipologia: "", estado: "" });
+    onSubmit({ comuna: "", tipologia: "", estado: "", proyecto: "" });
   };
   return (
     <Box
@@ -103,6 +108,35 @@ const FilterComponent = (props: {
               gap: 2,
             }}
           >
+            <TextField
+              label="Buscar Proyecto"
+              value={proyecto}
+              onChange={(e) => setProyecto(e.target.value)}
+              InputLabelProps={{
+                sx: {
+                  color: "#fff",
+                  "&.Mui-focused": { color: "#fff" },
+                  "&.MuiInputLabel-shrink": { color: "#fff" },
+                },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#ccc",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#888",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#000",
+                  },
+                },
+                "& .MuiInputBase-root": {
+                  color: "#fff",
+                },
+              }}
+            />
+
             <Autocomplete
               options={comunas}
               value={comuna}

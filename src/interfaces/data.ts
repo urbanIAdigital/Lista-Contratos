@@ -14,7 +14,7 @@ export interface IContratos {
   reciboSEM: number;
   "prog%": number;
   "ejec%": number;
-  presIncumi?: string;
-  entregaSEM?: string;
+  presIncumi: string;
+  entregaSEM: string;
   linkBuild: string;
 }

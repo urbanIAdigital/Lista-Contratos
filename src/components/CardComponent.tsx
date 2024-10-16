@@ -5,7 +5,6 @@ import CardMedia from "@mui/material/CardMedia";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
-import FeYAlegria from "../assets/fe_y_alegria.png";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function CardComponent(props: { data: any }) {
@@ -21,7 +20,7 @@ export default function CardComponent(props: { data: any }) {
         <CardMedia
           component="img"
           height="140"
-          image={FeYAlegria}
+          src="https://edumedellin-my.sharepoint.com/:i:/r/personal/aurlin_cuesta_edu_gov_co/Documents/Im%C3%A1genes/IMG_4825.JPG?csf=1&web=1&e=hbLJ9A"
           alt={data.contrato}
         />
         <CardContent sx={{ p: 1 }}>
