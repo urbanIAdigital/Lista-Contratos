@@ -1,6 +1,7 @@
 import { Box, List, ListItem, Typography } from "@mui/material";
 // import { IconSchool } from "@tabler/icons-react";
 import IconSchool from "../assets/graduate.png";
+import placeholderImage from "../assets/placeholder.jpg";
 
 const CardComponent2 = (props: { data: any }) => {
   const { data } = props;
@@ -49,7 +50,7 @@ const CardComponent2 = (props: { data: any }) => {
   return (
     <div className="first hero">
       <img
-        src="https://edumedellin-my.sharepoint.com/:i:/r/personal/aurlin_cuesta_edu_gov_co/Documents/Im%C3%A1genes/IMG_4825.JPG?csf=1&web=1&e=hbLJ9A"
+        src={placeholderImage}
         alt=""
         className="image"
       />
