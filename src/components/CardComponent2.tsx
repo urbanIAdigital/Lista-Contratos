@@ -3,63 +3,21 @@ import { Box, List, ListItem, Typography } from "@mui/material";
 import IconSchool from "../assets/graduate.png";
 import placeholderImage from "../assets/placeholder.jpg";
 
-const CardComponent2 = (props: { data: any }) => {
-  const { data } = props;
-  const USDollar = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "COP",
-  });
-  function timestampToDateBogota(timestamp) {
-    // Crear un objeto Date con el timestamp
-    const date = new Date(timestamp);
+const CardComponent2 = (props: {
+  name: string;
+  listToRender: { primary: string; secondary: any }[];
+}) => {
+  const { name, listToRender } = props;
 
-    // Convertir la fecha a la zona horaria de Bogotá (UTC-5)
-    const options: Intl.DateTimeFormatOptions = {
-      timeZone: "America/Bogota",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    };
-
-    // Formatear la fecha en el formato dd/mm/yyyy
-    const formattedDate = new Intl.DateTimeFormat("es-CO", options).format(
-      date
-    );
-
-    // Reorganizar la fecha en el formato deseado
-    const [day, month, year] = formattedDate.split("/");
-
-    return `${day}/${month}/${year}`;
-  }
-  const listToRender = [
-    { primary: "Estado Avance:", secondary: data.estado },
-    { primary: "Contrato:", secondary: data.contrato },
-    {
-      primary: "Valor Contrato:",
-      secondary: isNaN(data.vlrContrato)
-        ? "NA"
-        : USDollar.format(data.vlrContrato),
-    },
-    { primary: "Tipología:", secondary: data.tipologia },
-    { primary: "Comuna:", secondary: data.comuna },
-    {
-      primary: "Fecha entrega:",
-      secondary: timestampToDateBogota(data.final),
-    },
-  ];
   return (
     <div className="first hero">
-      <img
-        src={placeholderImage}
-        alt=""
-        className="image"
-      />
+      <img src={placeholderImage} alt="" className="image" />
       <div className="text"></div>
       <div className="logo">
         <img src={IconSchool} alt="" />
       </div>
       <div className="main-text">
-        <p>{data.proyecto}</p>
+        <p>{name}</p>
       </div>
       <Box display={"flex"} flexDirection={"row"}>
         <List sx={{ color: "white" }}>

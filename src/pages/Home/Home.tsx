@@ -3,11 +3,12 @@ import { useState } from "react";
 import FilterComponent from "../../components/FilterComponent";
 import dataResp from "../../constants/data_resp.json";
 import CardComponent2 from "../../components/CardComponent2";
-
+import { timestampToDateBogota, USDollar } from "../../helpers/date";
+import ApexChartComponent from "../../components/TimelineChart";
 const Home = () => {
   const [dataFromJson, setDataFromJson] = useState(dataResp);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8); 
+  const [itemsPerPage] = useState(8);
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
@@ -19,7 +20,7 @@ const Home = () => {
     proyecto: string;
   }) => {
     console.log(data);
-  
+
     if (
       data.comuna === "" &&
       data.tipologia === "" &&
@@ -29,7 +30,7 @@ const Home = () => {
       setDataFromJson(dataResp);
       return;
     }
-  
+
     const filteredData = [...dataResp].filter((item) => {
       const filterByComuna = data.comuna ? item.comuna === +data.comuna : true;
       const filterByEstado = data.estado ? item.estado === data.estado : true;
@@ -39,13 +40,16 @@ const Home = () => {
       const filterByProyecto = data.proyecto
         ? item.proyecto.toLowerCase().includes(data.proyecto.toLowerCase())
         : true;
-  
-      return filterByComuna && filterByTipologia && filterByEstado && filterByProyecto;
+
+      return (
+        filterByComuna &&
+        filterByTipologia &&
+        filterByEstado &&
+        filterByProyecto
+      );
     });
-  
     setDataFromJson(filteredData);
   };
-  
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -54,7 +58,12 @@ const Home = () => {
   return (
     <Box>
       <FilterComponent onSubmit={(data) => onSubmitFilter(data)} />
-      <Box width={"100%"} display={"flex"} justifyContent={"center"}>
+      <Box
+        width={"100%"}
+        display={"flex"}
+        alignItems={"center"}
+        flexDirection={"column"}
+      >
         <Box
           bgcolor={"#ECDFDF"}
           width={"90%"}
@@ -81,7 +90,25 @@ const Home = () => {
               >
                 {currentItems.map((item, index: number) => (
                   <Grid key={index} item xs={12} sm={4} md={3} mb={1}>
-                    <CardComponent2 data={item}/>
+                    <CardComponent2
+                      name={item.proyecto}
+                      listToRender={[
+                        { primary: "Estado Avance:", secondary: item.estado },
+                        { primary: "Contrato:", secondary: item.contrato },
+                        {
+                          primary: "Valor Contrato:",
+                          secondary: isNaN(+item.vlrContrato)
+                            ? "NA"
+                            : USDollar.format(+item.vlrContrato),
+                        },
+                        { primary: "Tipología:", secondary: item.tipologia },
+                        { primary: "Comuna:", secondary: item.comuna },
+                        {
+                          primary: "Fecha entrega:",
+                          secondary: timestampToDateBogota(item.final),
+                        },
+                      ]}
+                    />
                   </Grid>
                 ))}
               </Grid>
@@ -97,6 +124,20 @@ const Home = () => {
               />
             </Grid>
           </Grid>
+        </Box>
+        <Box
+          bgcolor={"#ECDFDF"}
+          width={"90%"}
+          borderRadius={"5px"}
+          mt={2}
+          p={2}
+        >
+          <ApexChartComponent
+            data={dataResp.map((proyecto) => ({
+              x: proyecto.proyecto,
+              y: [proyecto.inicio, proyecto.final],
+            }))}
+          />
         </Box>
       </Box>
     </Box>

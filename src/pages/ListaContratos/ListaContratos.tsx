@@ -16,6 +16,7 @@ const ListaContratos = () => {
   //   });
   //   setDataFromJson(filteredData);
   // };
+
   const rows = dataResp;
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {

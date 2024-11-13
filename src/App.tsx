@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/Home/Home";
 import ListaContratos from "./pages/ListaContratos/ListaContratos";
 import { createTheme, ThemeProvider } from "@mui/material";
+import ContratosInteradministrativos from "./pages/ContratosInteradministrativos2/ContratosInteradministrativos";
 
 // const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
 //   const { isAuthenticated } = useAuth();
@@ -39,6 +40,9 @@ const App: FC = () => {
             {/* Ruta pública para el login */}
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
+            </Route>
+            <Route path="/ci" element={<Layout />}>
+              <Route index element={<ContratosInteradministrativos />} />
             </Route>
             <Route path="/list" element={<Layout />}>
               <Route index element={<ListaContratos />} />
