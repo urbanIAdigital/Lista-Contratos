@@ -19,7 +19,6 @@ const Home = () => {
     estado: string;
     proyecto: string;
   }) => {
-    console.log(data);
 
     if (
       data.comuna === "" &&
@@ -88,10 +87,11 @@ const Home = () => {
                 width={"100%"}
                 spacing={3}
               >
-                {currentItems.map((item, index: number) => (
-                  <Grid key={index} item xs={12} sm={4} md={3} mb={1}>
+                {currentItems.map((item) => (
+                  <Grid key={item.id} item xs={12} sm={4} md={3} mb={1} >
                     <CardComponent2
                       name={item.proyecto}
+                      id={item.id}
                       listToRender={[
                         { primary: "Estado Avance:", secondary: item.estado },
                         { primary: "Contrato:", secondary: item.contrato },

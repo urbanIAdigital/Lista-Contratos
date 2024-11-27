@@ -6,6 +6,8 @@ import Home from "./pages/Home/Home";
 import ListaContratos from "./pages/ListaContratos/ListaContratos";
 import { createTheme, ThemeProvider } from "@mui/material";
 import ContratosInteradministrativos from "./pages/ContratosInteradministrativos2/ContratosInteradministrativos";
+import DetallesContrato from "./pages/ListaContratos/DetallesContrato";
+import NotFoundPage from "./pages/NotFoundPage";
 
 // const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
 //   const { isAuthenticated } = useAuth();
@@ -40,13 +42,19 @@ const App: FC = () => {
             {/* Ruta pública para el login */}
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
+              <Route path="/:id" element={<DetallesContrato />} />
             </Route>
             <Route path="/ci" element={<Layout />}>
               <Route index element={<ContratosInteradministrativos />} />
+              <Route path="/ci/:id" element={<DetallesContrato />} />
             </Route>
             <Route path="/list" element={<Layout />}>
               <Route index element={<ListaContratos />} />
             </Route>
+            <Route path="*" element={<Layout />}>
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
+            
 
             {/* Rutas protegidas */}
             {/* <Route
