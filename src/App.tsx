@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/Home/Home";
@@ -54,7 +54,6 @@ const App: FC = () => {
             <Route path="*" element={<Layout />}>
               <Route path="*" element={<NotFoundPage />} />
             </Route>
-            
 
             {/* Rutas protegidas */}
             {/* <Route
