@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/Home/Home";
@@ -35,7 +35,7 @@ const App: FC = () => {
     },
   });
   return (
-    <BrowserRouter basename="/Lista-Contratos/">
+    <HashRouter basename="/Lista-Contratos/">
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <Routes>
@@ -72,7 +72,7 @@ const App: FC = () => {
           </Routes>
         </ThemeProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
