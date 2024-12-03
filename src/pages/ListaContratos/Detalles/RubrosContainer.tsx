@@ -18,6 +18,8 @@ interface RubrosProps {
 
 const RubrosContainer: React.FC<RubrosProps> = ({ rubros }) => {
   const [openModal, setOpenModal] = useState(false);
+  console.log(rubros);
+
   const [selectedDetalles, setSelectedDetalles] = useState<Detalle[]>([]);
   const handleOpenModal = (detalles: Detalle[]) => {
     setSelectedDetalles(detalles);
@@ -50,11 +52,12 @@ const RubrosContainer: React.FC<RubrosProps> = ({ rubros }) => {
     },
     {
       field: "acciones",
-      headerName: "Acciones",
+      headerName: "Detalles",
       flex: 1,
       renderCell: (params) => (
         <>
-          {params.row.detalles?.length > 0 && (
+          {/* {JSON.stringify(params.row.detalles)} */}
+          {params.row.anos_unicos[0] && (
             <Tooltip title="Ver Detalles">
               <IconButton
                 color="primary"
