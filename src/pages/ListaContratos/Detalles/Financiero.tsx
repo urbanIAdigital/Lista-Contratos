@@ -17,9 +17,12 @@ const Financiero: FC<MainContainerProps> = ({ data }) => {
           <ConDerivadosContainer conDerivados={data.con_derivados} />
         </>
       )}
-
-      <h2>Rubros</h2>
-      <RubrosContainer rubros={data.rubros} />
+      {data.rubros[0].rubro && (
+        <>
+          <h2>Rubros</h2>
+          <RubrosContainer rubros={data.rubros} />
+        </>
+      )}
     </div>
   );
 };

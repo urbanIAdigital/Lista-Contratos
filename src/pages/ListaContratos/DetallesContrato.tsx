@@ -37,12 +37,7 @@ const DetallesContrato = () => {
   }, []);
 
   return (
-    <Box
-      width={"100%"}
-      display={"flex"}
-      alignItems={"center"}
-      flexDirection={"column"}
-    >
+    <Box width="100%" display="flex" alignItems="center" flexDirection="column">
       <Box
         sx={{
           display: "flex",
@@ -55,6 +50,7 @@ const DetallesContrato = () => {
           backgroundColor: "#fff",
           width: "90%",
           mt: 3,
+          minHeight: "500px", // Asegura un tamaño mínimo para todo el contenido
         }}
       >
         <Box
@@ -76,20 +72,33 @@ const DetallesContrato = () => {
             {financiero?.contrato_detalles.nombre_interadministrativo}
           </Typography>
         </Box>
-        <Box sx={{ flex: 1 }} width={"100%"}>
-          <Box borderRadius={"5px"}>
+        <Box
+          sx={{ flex: 1, display: "flex", flexDirection: "column" }}
+          width="100%"
+        >
+          <Box borderRadius="5px">
             <Tabs
               value={tabValue}
               onChange={handleChange}
               aria-label="basic tabs example"
               sx={{ mb: 3 }}
             >
-              <Tab label="Financiero" value={"financiero"} />
-              <Tab label="Contractual" disabled value={"contractual"} />
-              <Tab label="Obra" disabled value={"obra"} />
+              <Tab label="Financiero" value="financiero" />
+              <Tab label="Contractual" value="contractual" />
+              <Tab label="Obra" disabled value="obra" />
             </Tabs>
             {tabValue === "financiero" && (
-              <Box width={"100%"} sx={{ bgcolor: "#FFFFFF" }}>
+              <Box
+                width="100%"
+                sx={{
+                  bgcolor: "#FFFFFF",
+                  flexGrow: 1, // Permite que esta sección ocupe espacio restante
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  minHeight: "400px", // Tamaño mínimo para evitar cortes
+                }}
+              >
                 {!loading ? (
                   <Financiero data={financiero} />
                 ) : (

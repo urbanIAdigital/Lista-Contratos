@@ -7,16 +7,38 @@ import {
   DialogContent,
   IconButton,
   Tooltip,
+  Box,
 } from "@mui/material";
 import { Rubro, Detalle } from "../../../interfaces/financiero";
 import { IconEye } from "@tabler/icons-react";
 import { currencyFormatter } from "../../../helpers/date";
+import ReactApexChart from "react-apexcharts";
 
 interface RubrosProps {
   rubros: Rubro[];
 }
 
 const RubrosContainer: React.FC<RubrosProps> = ({ rubros }) => {
+  const series = rubros.map((item) =>
+    parseFloat(item.total_apropiacion_definitiva || "0")
+  );
+  const labels = rubros.map((item) => item.nombre_rubro);
+
+  const options: ApexCharts.ApexOptions = {
+    chart: {
+      type: "pie",
+      height: 400, // Altura específica en píxeles
+      width: 400, // Ancho específico en píxeles
+    },
+    labels,
+    legend: {
+      show: false,
+    },
+    title: {
+      text: "Distribución de recursos por rubro",
+      align: "center",
+    },
+  };
   const [openModal, setOpenModal] = useState(false);
   console.log(rubros);
 
@@ -125,12 +147,18 @@ const RubrosContainer: React.FC<RubrosProps> = ({ rubros }) => {
   ];
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={rubros}
-        columns={rubrosColumns}
-        getRowId={(row) => row.rubro}
-      />
+    <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+      <Box height={400} width={"100%"}>
+        <DataGrid
+          rows={rubros}
+          columns={rubrosColumns}
+          getRowId={(row) => row.rubro}
+          sx={{ height: "400px!important" }}
+        />
+      </Box>
+      <Box width={"50%"}>
+        <ReactApexChart options={options} series={series} type="pie" />
+      </Box>
 
       {/* Modal para mostrar detalles */}
       <Dialog
@@ -158,7 +186,7 @@ const RubrosContainer: React.FC<RubrosProps> = ({ rubros }) => {
           </Button>
         </DialogContent>
       </Dialog>
-    </div>
+    </Box>
   );
 };
 
