@@ -91,7 +91,8 @@ const DetallesContrato = () => {
         item.valor_total,
         item.pago_total,
       ]);
-
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       doc.autoTable({
         startY: currentY,
         head: [
@@ -99,7 +100,8 @@ const DetallesContrato = () => {
         ],
         body: derivadosTable,
       });
-
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       currentY = doc.lastAutoTable.finalY + 10;
     }
 
@@ -113,9 +115,12 @@ const DetallesContrato = () => {
         item.nombre_rubro,
         item.total_apropiacion_inicial,
         item.total_apropiacion_definitiva,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         item.anos_unicos.join(", "),
       ]);
-
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       doc.autoTable({
         startY: currentY,
         head: [
