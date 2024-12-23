@@ -80,7 +80,7 @@ const DetallesContrato = () => {
               sx={{ mb: 3 }}
             >
               <Tab label="Financiero" value={"financiero"} />
-              <Tab label="Contractual" disabled value={"contractual"} />
+              <Tab label="oe" disabled value={"contractual"} />
               <Tab label="Obra" disabled value={"obra"} />
             </Tabs>
             {tabValue === "financiero" && (
